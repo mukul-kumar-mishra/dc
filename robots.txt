@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /assets/img/brands/
+Sitemap: https://destrocorp.com/sitemap.xml
