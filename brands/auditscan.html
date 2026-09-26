@@ -3,23 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>AuditScan — Deterministic Code Audits by DestroCorp</title>
-  <meta name="description" content="AuditScan by DestroCorp: deterministic code audits. Every finding pinned to file:line with rescan proof. No LLM in the verdict.">
+  <title>AuditScan — Code Audits with File-Line Evidence | DestroCorp</title>
+  <meta name="description" content="AuditScan by DestroCorp: static code audits for folders and git repos. Findings cite file and line numbers, with rescan checks.">
   <link rel="canonical" href="https://destrocorp.com/brands/auditscan.html">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#8c3b5e">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="DestroCorp">
-  <meta property="og:title" content="AuditScan — Catch AI slop, prove every line">
-  <meta property="og:description" content="Deterministic audits: service map, PR gate, compliance, triage — every finding with file:line and rescan proof.">
+  <meta property="og:title" content="AuditScan — Code Audits with File-Line Evidence">
+  <meta property="og:description" content="Static code audits for folders and git repos. Findings cite file and line numbers, with rescan checks.">
   <meta property="og:url" content="https://destrocorp.com/brands/auditscan.html">
-  <meta property="og:image" content="https://destrocorp.com/assets/img/og-cover.png">
+  <meta property="og:image" content="https://destrocorp.com/assets/img/new-img.png">
+  <meta property="og:image:alt" content="DestroCorp logo">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="../assets/img/new-img.png">
+  <meta name="twitter:title" content="AuditScan — Code Audits with File-Line Evidence">
+  <meta name="twitter:description" content="Static code audits. Findings cite file and line numbers, with rescan checks.">
+  <meta name="twitter:image" content="https://destrocorp.com/assets/img/new-img.png">
+  <link rel="icon" type="image/png" href="../assets/img/new-img.png">
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="stylesheet" href="../assets/css/main.css">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"AuditScan","url":"https://auditscan.sh","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","description":"Deterministic static audit for folders and git repos: service map, PR gate, compliance, triage — every finding with file:line and rescan proof.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"DestroCorp","url":"https://destrocorp.com/"}}
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"AuditScan","url":"https://destrocorp.com/brands/auditscan.html","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","description":"Static code audits for folders and git repos, with file-and-line evidence and rescan checks.","publisher":{"@type":"Organization","name":"DestroCorp","url":"https://destrocorp.com/"}}
   </script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://destrocorp.com/"},{"@type":"ListItem","position":2,"name":"AuditScan","item":"https://destrocorp.com/brands/auditscan.html"}]}
@@ -29,22 +33,22 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header"><div class="wrap nav" role="navigation" aria-label="Primary">
   <a class="brandmark" href="../index.html"><img src="../assets/img/new-img.png" alt="DestroCorp — Tools for a verifiable future" width="190" height="38" style="width:auto;height:38px;max-width:220px" /></a>
-  <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu"><span></span><span></span><span></span></button><nav class="nav-links" id="primary-nav" aria-label="Sections"><a href="../index.html#brands">Products</a><a href="../about.html">About</a><a href="../contact.html">Contact</a><a class="btn btn-sm" href="https://auditscan.sh" rel="noopener">Open auditscan.sh</a></nav>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu"><span></span><span></span><span></span></button><nav class="nav-links" id="primary-nav" aria-label="Sections"><a href="../index.html#brands">Products</a><a href="kirvyn.html">Kirvyn</a><a href="auditscan.html" aria-current="page">AuditScan</a><a href="buildopsy.html">Buildopsy</a><a href="../about.html">About</a><a href="../contact.html">Contact</a><a class="btn btn-sm" href="https://auditscan.sh" rel="noopener">Open auditscan.sh</a></nav>
 </div></header>
 <main id="main"><div class="wrap">
   <p class="crumb"><a href="../index.html">Home</a> › <a href="../index.html#brands">Products</a> › AuditScan</p>
-  <h1 class="page-title">AuditScan — catch AI slop, prove every line</h1>
-  <p class="sec-sub">By DestroCorp · Live at <a href="https://auditscan.sh">auditscan.sh</a> · App at <a href="https://app.auditscan.sh">app.auditscan.sh</a>. Deterministic static analysis — nothing executes, no LLM decides.</p>
+  <h1 class="page-title">AuditScan — code audits with file-line evidence</h1>
+  <p class="sec-sub">By DestroCorp · Live at <a href="https://auditscan.sh">auditscan.sh</a> · App at <a href="https://app.auditscan.sh">app.auditscan.sh</a>. Static analysis over your code — findings cite the exact file and line.</p>
   <div class="split">
     <div>
       <img src="../assets/img/brands/auditscan-logo.png" alt="AuditScan logo" width="320" loading="lazy" class="brand-hero">
       <h2>How it works</h2>
       <ul class="check">
-        <li><strong>Point at code</strong> — a folder or a git URL.<br><small>Nothing executes. Local-path scans are disabled in production.</small></li>
-        <li><strong>Deterministic sweep</strong> — services light up; every finding gets <code>file:line</code> and a counterfactual.<br><small>DEAD handlers, untested risky functions, inputs reaching shell/SQL.</small></li>
-        <li><strong>Ship proof</strong> — PR merge gate, compliance map (SOC2 / ISO 27001 / PCI / HIPAA / GDPR / ASVS / CRA subset), triage board.<br><small>PASS means linked findings are gone on rescan; FAIL stays blocked with exact lines.</small></li>
+        <li><strong>Point at code</strong> — a folder or a git URL.<br><small>Scans read code only; nothing is executed.</small></li>
+        <li><strong>Review findings</strong> — each finding cites <code>file:line</code> with an explanation.<br><small>Covers dead handlers, untested risky functions, and user input reaching shell or SQL.</small></li>
+        <li><strong>Recheck after fixes</strong> — rescan to confirm findings are resolved.<br><small>Includes a PR merge gate, a compliance overview and a triage board.</small></li>
       </ul>
-      <div class="notice"><strong>Honest scope:</strong> AuditScan is deterministic static analysis, not a guarantee of zero vulnerabilities and not a certification. It complements — never replaces — manual security review. Liability is capped to fees paid (see <a href="../terms.html">Terms</a>).</div>
+      <div class="notice"><strong>Scope:</strong> AuditScan is static analysis. It does not guarantee code is vulnerability-free and is not a compliance certification. It does not replace manual security review. Liability is capped to fees paid (see <a href="../terms.html">Terms</a>).</div>
       <p style="margin-top:16px"><a class="btn" href="https://auditscan.sh" rel="noopener">Visit auditscan.sh →</a> <a class="btn btn-ghost" href="https://app.auditscan.sh" rel="noopener">Open the app →</a></p>
     </div>
     <aside class="card"><span class="tag">Factsheet</span><h3>AuditScan</h3>
@@ -61,13 +65,13 @@
 </div>
 <section class="block alt"><div class="wrap prose">
   <h2>Frequently asked questions</h2>
-  <details class="faq" open><summary>Is this PR safe to merge?</summary><p>The PR Merge Gate rescans a temp copy of the diff. PASS means all linked findings are gone; FAIL stays blocked with the exact lines to fix. No LLM decides.</p></details>
-  <details class="faq"><summary>Does AuditScan certify compliance?</summary><p>No. It maps the code-verifiable subset of common frameworks and links each control to <code>file:line</code>. Scores are directional — not a certification or legal opinion.</p></details>
+  <details class="faq" open><summary>Is this pull request safe to merge?</summary><p>The PR merge gate rescans the changed files. If the cited findings no longer appear, the gate passes; otherwise it lists the lines still to fix.</p></details>
+  <details class="faq"><summary>Does AuditScan certify compliance?</summary><p>No. It shows which parts of common frameworks relate to your code and links each item to a file and line. It is not a certification or legal opinion.</p></details>
   <details class="faq"><summary>What data do you retain from scans?</summary><p>Repository file names and scan results, retained until you delete them. Request erasure anytime via <a href="mailto:grievance@destrocorp.com">grievance@destrocorp.com</a>.</p></details>
 </div></section></main>
 <footer class="site" role="contentinfo"><div class="wrap foot-grid">
   <div><h4>DestroCorp</h4><ul><li><a href="../about.html">About us</a></li><li><a href="../contact.html">Contact us</a></li><li><a href="../security.html">Security</a></li></ul></div>
-  <div><h4>Products</h4><ul><li><a href="https://kirvyn.com">Kirvyn</a></li><li><a href="https://auditscan.sh">AuditScan</a></li><li><a href="https://buildopsy.com">Buildopsy</a></li></ul></div>
+  <div><h4>Products</h4><ul><li><a href="kirvyn.html">Kirvyn</a></li><li><a href="auditscan.html" aria-current="page">AuditScan</a></li><li><a href="buildopsy.html">Buildopsy</a></li></ul></div>
   <div><h4>Legal</h4><ul><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../refunds.html">Refunds</a></li><li><a href="../shipping.html">Shipping</a></li></ul></div>
   <div><h4>Privacy choices</h4><ul><li><a href="../cookies.html">Cookie Policy</a></li><li><a href="#" data-open-consent>Cookie settings</a></li></ul></div>
 </div><div class="foot-base"><div class="wrap"><p>© <span data-year>2026</span> DestroCorp. All rights reserved.</p></div></div></footer>
