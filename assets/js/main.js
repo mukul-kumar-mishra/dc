@@ -44,15 +44,22 @@
   }
   document.addEventListener("DOMContentLoaded", function () {
     applyBanner();
-    // Mobile nav toggle
+    // Mobile nav toggle — closes on link tap, Escape, or resize to desktop
     var toggle = document.querySelector(".nav-toggle"), nav = document.getElementById("primary-nav");
     if (toggle && nav) {
       toggle.addEventListener("click", function () {
         var open = nav.classList.toggle("open");
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       });
       nav.addEventListener("click", function (e) {
-        if (e.target.closest("a")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
+        if (e.target.closest("a")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); toggle.setAttribute("aria-label", "Open menu"); }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && nav.classList.contains("open")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); toggle.setAttribute("aria-label", "Open menu"); toggle.focus(); }
+      });
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 760 && nav.classList.contains("open")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
       });
     }
     var bAll = document.getElementById("c-accept");
