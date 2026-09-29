@@ -1,9 +1,21 @@
-/* DestroCorp consent manager — 100% first-party, no trackers loaded by default.
-   Compliant with: EU GDPR/ePrivacy, UK GDPR, India DPDP Act 2023,
-   California CCPA/CPRA, Brazil LGPD, Canada PIPEDA, Australia Privacy Act.
-   Default state = "rejected" (no analytics, no marketing). Choice stored locally. */
+/* DestroCorp — same interaction pattern as buildopsy.com:
+   dark default + light opt-in toggle, mobile nav, consent manager.
+   First-party only. Inline SVG icons (no icon CDN). */
 (function () {
   "use strict";
+
+  /* ---- Theme (dark default, light opt-in) ---- */
+  var THEME_KEY = "dc-theme";
+  var root = document.documentElement;
+  function syncThemeIcons() {
+    var dark = root.classList.contains("dark");
+    document.querySelectorAll(".ic-sun").forEach(function (el) { el.style.display = dark ? "none" : ""; });
+    document.querySelectorAll(".ic-moon").forEach(function (el) { el.style.display = dark ? "" : "none"; });
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", dark ? "#0f0c10" : "#faf7f3");
+  }
+
+  /* ---- Consent manager (unchanged behaviour) ---- */
   var KEY = "destrocorp-consent-v1";
   function read() {
     try { return JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { return null; }
@@ -11,7 +23,6 @@
   function write(v) {
     try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* private mode */ }
   }
-  // Respect Do-Not-Track / Global Privacy Control: never enable optional storage.
   var dnt = (navigator.doNotTrack === "1" || window.doNotTrack === "1" ||
              navigator.globalPrivacyControl === true);
   function current() {
@@ -26,7 +37,6 @@
     if (!box) return;
     var c = current();
     box.classList.toggle("show", !c.decided);
-    // Reflect stored choice in checkboxes
     var p = document.getElementById("c-pref"), a = document.getElementById("c-an"), m = document.getElementById("c-mkt");
     if (p) p.checked = !!c.preferences;
     if (a) a.checked = !!c.analytics && !dnt;
@@ -42,26 +52,40 @@
             marketing: !!marketing, decided: true, ts: new Date().toISOString() });
     applyBanner();
   }
+
   document.addEventListener("DOMContentLoaded", function () {
-    applyBanner();
-    // Mobile nav toggle — closes on link tap, Escape, or resize to desktop
-    var toggle = document.querySelector(".nav-toggle"), nav = document.getElementById("primary-nav");
-    if (toggle && nav) {
+    /* theme */
+    syncThemeIcons();
+    var themeBtn = document.getElementById("themeToggle");
+    if (themeBtn) themeBtn.addEventListener("click", function () {
+      root.classList.toggle("dark");
+      try { localStorage.setItem(THEME_KEY, root.classList.contains("dark") ? "dark" : "light"); } catch (e) {}
+      syncThemeIcons();
+    });
+
+    /* mobile nav — supports both buildopsy (.topnav) and legacy (#primary-nav) markup */
+    function wireNav(toggleSel, navSel) {
+      var toggle = document.querySelector(toggleSel), nav = document.querySelector(navSel);
+      if (!toggle || !nav) return;
       toggle.addEventListener("click", function () {
         var open = nav.classList.toggle("open");
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       });
       nav.addEventListener("click", function (e) {
-        if (e.target.closest("a")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); toggle.setAttribute("aria-label", "Open menu"); }
+        if (e.target.closest("a")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
       });
       document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && nav.classList.contains("open")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); toggle.setAttribute("aria-label", "Open menu"); toggle.focus(); }
+        if (e.key === "Escape" && nav.classList.contains("open")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); toggle.focus(); }
       });
       window.addEventListener("resize", function () {
         if (window.innerWidth > 760 && nav.classList.contains("open")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
       });
     }
+    wireNav("#navToggle", "#topnav");
+    wireNav(".nav-toggle", "#primary-nav");
+
+    /* consent */
+    applyBanner();
     var bAll = document.getElementById("c-accept");
     var bNec = document.getElementById("c-reject");
     var bSave = document.getElementById("c-save");
@@ -71,7 +95,6 @@
       var p = document.getElementById("c-pref"), a = document.getElementById("c-an"), m = document.getElementById("c-mkt");
       decide(p && p.checked, a && a.checked, m && m.checked);
     });
-    // Footer "Cookie settings" re-opener
     document.querySelectorAll("[data-open-consent]").forEach(function (el) {
       el.addEventListener("click", function (ev) {
         ev.preventDefault();
@@ -79,9 +102,66 @@
         if (box) { box.classList.add("show"); box.scrollIntoView({ block: "nearest" }); }
       });
     });
-    // Footer year
     document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
-    // Contact form -> mailto composer (no backend, no data stored by us)
+
+    /* reduced-motion flag shared by glow + counters */
+    var hbReduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+    /* hero pointer glow (fine pointers only, no reduced motion) */
+    var heroXl = document.querySelector(".hero-xl");
+    var canGlow = !hbReduce && window.matchMedia && window.matchMedia("(hover: hover)").matches;
+    if (heroXl && canGlow) {
+      var glowTick = false;
+      heroXl.addEventListener("pointermove", function (e) {
+        if (glowTick) return; glowTick = true;
+        requestAnimationFrame(function () {
+          var r = heroXl.getBoundingClientRect();
+          heroXl.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100).toFixed(2) + "%");
+          heroXl.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(2) + "%");
+          heroXl.classList.add("glow");
+          glowTick = false;
+        });
+      });
+      heroXl.addEventListener("pointerleave", function () { heroXl.classList.remove("glow"); });
+    }
+
+    /* count-up stats */
+    function countUp(el) {
+      var target = parseInt(el.getAttribute("data-count"), 10);
+      var suffix = el.getAttribute("data-suffix") || "";
+      if (isNaN(target)) return;
+      if (hbReduce) { el.textContent = target + suffix; return; }
+      var t0 = null, dur = 1200;
+      function step(t) {
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * e) + (p === 1 ? suffix : "");
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    var counters = document.querySelectorAll("[data-count]");
+    if ("IntersectionObserver" in window && counters.length) {
+      var cio = new IntersectionObserver(function (es) {
+        es.forEach(function (en) { if (en.isIntersecting) { countUp(en.target); cio.unobserve(en.target); } });
+      }, { threshold: 0.5 });
+      counters.forEach(function (el) { cio.observe(el); });
+    }
+
+    /* subtle reveal */
+    var els = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window && els.length) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.1 });
+      els.forEach(function (el) { io.observe(el); });
+    } else {
+      els.forEach(function (el) { el.classList.add("in"); });
+    }
+
+    /* contact form -> mailto composer (no backend, nothing stored) */
     var f = document.getElementById("dsr-form");
     if (f) f.addEventListener("submit", function (ev) {
       ev.preventDefault();
