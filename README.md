@@ -20,7 +20,7 @@ website/
 4. Verify: https, HSTS, no mixed content, 404 returns 404 status.
 
 ## Theme
-- Single maroon + gold light theme. No toggle, no theme JS.
+- Warm paper-and-copper light theme with an ink-and-brass dark theme; preference is stored locally.
 
 ## Caddy snippet (add to existing Caddyfile)
 destrocorp.com, www.destrocorp.com {
@@ -47,7 +47,7 @@ destrocorp.com, www.destrocorp.com {
   plus the official buildopsy.com logo (downloaded from buildopsy.com/images/logo.png
   for use on this parent-company page — replace if their brand rules require it).
   Originals stay in their repos; these copies keep destrocorp.com self-contained.
-- System font stack only (no Google Fonts) = no cross-border font fetch = GDPR-clean + fastest load.
+- Fonts are self-hosted; the site makes no external font requests.
 - If you later add analytics: use a self-hosted, cookieless option (e.g. Plausible
   self-hosted, MIT licence) behind the existing opt-in consent manager. Never add
   Google Analytics without a DPA + explicit consent + IP anonymisation.

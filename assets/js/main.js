@@ -12,7 +12,7 @@
     document.querySelectorAll(".ic-sun").forEach(function (el) { el.style.display = dark ? "none" : ""; });
     document.querySelectorAll(".ic-moon").forEach(function (el) { el.style.display = dark ? "" : "none"; });
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", dark ? "#0f0c10" : "#faf7f3");
+    if (meta) meta.setAttribute("content", dark ? "#12130f" : "#f2eee4");
   }
 
   /* ---- Consent manager (unchanged behaviour) ---- */
