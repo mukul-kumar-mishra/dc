@@ -104,33 +104,15 @@
     });
     document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-    /* reduced-motion flag shared by glow + counters */
-    var hbReduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-
-    /* hero pointer glow (fine pointers only, no reduced motion) */
-    var heroXl = document.querySelector(".hero-xl");
-    var canGlow = !hbReduce && window.matchMedia && window.matchMedia("(hover: hover)").matches;
-    if (heroXl && canGlow) {
-      var glowTick = false;
-      heroXl.addEventListener("pointermove", function (e) {
-        if (glowTick) return; glowTick = true;
-        requestAnimationFrame(function () {
-          var r = heroXl.getBoundingClientRect();
-          heroXl.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100).toFixed(2) + "%");
-          heroXl.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(2) + "%");
-          heroXl.classList.add("glow");
-          glowTick = false;
-        });
-      });
-      heroXl.addEventListener("pointerleave", function () { heroXl.classList.remove("glow"); });
-    }
+    /* Respect reduced motion for animated counters. */
+    var prefersReducedMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     /* count-up stats */
     function countUp(el) {
       var target = parseInt(el.getAttribute("data-count"), 10);
       var suffix = el.getAttribute("data-suffix") || "";
       if (isNaN(target)) return;
-      if (hbReduce) { el.textContent = target + suffix; return; }
+      if (prefersReducedMotion) { el.textContent = target + suffix; return; }
       var t0 = null, dur = 1200;
       function step(t) {
         if (!t0) t0 = t;
